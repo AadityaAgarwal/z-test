@@ -1,30 +1,35 @@
 import csv
 import pandas as pd
 from pandas.io.parsers import read_csv
-import plotly_express as px
-import plotly.figure_factory as ff
+# import plotly_express as px
+# import plotly.figure_factory as ff
 import statistics
 import random
-import plotly.graph_objects as go
 
 df=pd.read_csv('DataSampling.csv')
 
-read_data=list(df['reading_time'])
-response_data=list(df['responses'])
+read_data=list(df['claps'])
 
-fig=px.scatter(df,y=response_data,color=read_data).show()
 
-with open("DataSampling.csv",newline='') as f:
-  reader=csv.reader(f)
-  responseData=list(reader)
-responseData.pop(0) 
-totalEntries=len(responseData)
-rem_given=0
+meanList=[]
+dataList=[]
+# print(statistics.mean(read_data))
 
-for data in responseData:
-  if (int(data[3])==1):
-    rem_given+=1
+def listOfMean():
 
-import plotly.graph_objects as go
-fig=go.Figure(go.Bar(x=['reminded','not reminded'],y=[rem_given,(totalEntries-rem_given)]))
-fig.show()
+  dataset=[]
+  for i in range(0,30):
+    random_index=random.randint(0,(len(read_data)-1))
+    value=read_data[random_index]
+    dataset.append(value)
+  mean=statistics.mean(dataset)
+  dataList.append(dataset)
+  print(dataset)
+  return mean
+
+def finalSetOfData():
+  for i in range(0,100):
+    setOfMean=listOfMean()
+    meanList.append(setOfMean)
+
+print(dataList)
